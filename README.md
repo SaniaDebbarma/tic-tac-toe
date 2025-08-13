@@ -7,6 +7,7 @@ A fun, interactive web-based Tic Tac Toe game built with HTML, CSS, and JavaScri
 ## Demo
 
 ![Demo Screenshot](tictac1.jpg)
+![Demo Screenshot](tictac2.jpg)
 
 ## Features
 
@@ -20,7 +21,7 @@ A fun, interactive web-based Tic Tac Toe game built with HTML, CSS, and JavaScri
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/tic-tac-toe.git
+   git clone https://github.com/SaniaDebbarma/tic-tac-toe/tree/main
 
 2.	Open index.html in your browser to start playing.
 
