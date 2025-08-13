@@ -1,54 +1,59 @@
-# tic-tac-toe
-Tic Tac Toe Game is a web-based implementation of the classic Tic Tac Toe game using HTML, CSS, and JavaScript. 
 # Tic Tac Toe Game
 
-A fun, interactive web-based Tic Tac Toe game built with HTML, CSS, and JavaScript.
+A fun, interactive, web-based Tic Tac Toe game built with HTML, CSS, and JavaScript.
 
-## Demo
+## 🕹️ Demo
 
-![Demo Screenshot](tictac1.jpg)
-![Demo Screenshot](tictac2.jpg)
+Take a look at the game in action!
 
-## Features
+![Demo Screenshot 1](tictac1.jpg)
+![Demo Screenshot 2](tictac2.jpg)
 
-- Classic 3x3 Tic Tac Toe gameplay.
-- Interactive start, loading, and try-again screens.
-- Highlights win, lose, and draw conditions.
-- Responsive design and visually appealing animations.
-- Option to play again or exit the game.
+## ✨ Features
 
-## Installation
+- **Classic 3x3 grid gameplay:** Play against a friend or challenge yourself.
+- **Interactive screens:** Start, loading, and try-again screens for smooth user experience.
+- **Automatic win, lose, and draw detection:** Highlights game results instantly.
+- **Responsive design:** Looks great on desktops, tablets, and phones.
+- **Animated UI:** Enjoy visually appealing transitions and feedback.
+- **Replay and exit options:** Choose to play again or leave the game after each match.
 
-1. Clone the repository:
+## 🚀 Getting Started
+
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/SaniaDebbarma/tic-tac-toe/tree/main
+   git clone https://github.com/SaniaDebbarma/tic-tac-toe.git
+   ```
+2. **Open `index.html` in your browser** to start playing the game.
 
-2.	Open index.html in your browser to start playing.
+## 📝 Usage
 
-Usage
-	•	Click PLAY to start the game.
-	•	Take turns placing X and O on the board.
-	•	The game detects a win, loss, or draw automatically.
-	•	After the game ends, you can choose PLAY AGAIN or GIVE UP.
+- Click **PLAY** to begin.
+- Take turns placing **X** and **O** on the board.
+- The game will automatically detect if you win, lose, or draw.
+- After the game ends, click **PLAY AGAIN** to restart or **GIVE UP** to exit.
 
-Technologies Used
-	•	HTML5
-	•	CSS3
-	•	JavaScript (Vanilla JS)
-	•	Google Fonts (Press Start 2P)
- 
-Folder Structure
+## 🛠️ Technologies Used
 
+- **HTML5**
+- **CSS3**
+- **JavaScript (Vanilla JS)**
+- **Google Fonts:** [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P)
+
+## 📁 Folder Structure
+
+```
 tic-tac-toe/
-│
 ├── index.html       # Main HTML file
 ├── README.md        # Project documentation
-└── assets/          # Optional: images or screenshots
+└── assets/          # Images and screenshots
+```
 
-Contributing
+## 🤝 Contributing
 
-Contributions are welcome! Feel free to submit a Pull Request or open an Issue.
+Contributions are welcome!  
+Feel free to submit a [Pull Request](https://github.com/SaniaDebbarma/tic-tac-toe/pulls) or open an [Issue](https://github.com/SaniaDebbarma/tic-tac-toe/issues).
 
-License
+## 📄 License
 
 This project is open-source and free to use.
