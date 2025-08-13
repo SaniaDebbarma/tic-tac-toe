@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic Tac Toe</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Press Start 2P', cursive;
+    background-color: #f5ebdf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    background-color: #f7a6b5;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .screen {
+    background-color: #c5caef;
+    border-radius: 10px;
+    padding: 40px;
+    position: relative;
+    min-width: 400px;
+    min-height: 300px;
+    box-sizing: border-box;
+    display: none;
+  }
+  h1 {
+    text-align: center;
+    color: #f27287;
+    font-size: 24px;
+    text-shadow: 2px 2px #8a4253;
+    margin-bottom: 40px;
+  }
+  .btn {
+    display: block;
+    margin: 10px auto;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+  }
+  .play { background-color: #f8a94c; }
+  .exit { background-color: #f44336; }
+  .decor {
+    position: absolute;
+    font-size: 32px;
+    opacity: 0.7;
+    color: white;
+  }
+  /* Loading screen style */
+  .loading-text {
+    text-align: center;
+    color: #4bc9b5;
+    font-size: 20px;
+    text-shadow: 2px 2px #2c7a70;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+  }
+  /* Game board */
+  #gameBoard {
+    background-color: #c3dbb8;
+    flex-direction: column;
+    padding-top: 20px;
+    border-radius: 10px;
+  }
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 10px;
+    background-color: #f8c8cc;
+    border: 2px solid #b84a4a;
+    padding: 20px;
+    border-radius: 10px;
+    margin: auto;
+  }
+  .cell {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #f44336;
+  }
+  .cell.taken { pointer-events: none; }
+
+  /* Try Again Screen Styles */
+  .try-wrap {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #c5caef;
+    border-radius: 10px;
+    padding: 40px;
+    position: relative;
+    min-width: 400px;
+    min-height: 300px;
+    box-sizing: border-box;
+  }
+  .try-wrap .title {
+    color: #f27287;
+    font-size: 24px;
+    text-shadow: 2px 2px #8a4253;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .try-wrap .hearts {
+    position: relative;
+    width: 280px;
+    height: 60px;
+    margin-bottom: 30px;
+  }
+  .heart {
+    position: fixed;
+    fill: #f44336;
+  }
+ /* Updated heart positions to match original design */
+.heart-1 { left:6%; top:18%; width:8.5vmin; }
+.heart-2 { left:4.5%; top:30%; width:6.5vmin; }
+.heart-3 { left:6%; top:44%; width:5vmin; }
+.heart-4 { left:7%; top:62%; width:5.8vmin; }
+.heart-5 { left:5%; top:78%; width:3.8vmin; }
+.heart-6 { right:6%; top:12%; width:6vmin; }
+.heart-7 { right:4.5%; top:32%; width:4.8vmin; }
+.heart-8 { right:6%; top:54%; width:3.8vmin; }
+.heart-9 { right:7%; top:76%; width:7vmin; }
+  .try-wrap .cta {
+    display: flex;
+    gap: 20px;
+  }
+  .btn-try {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    background-color: #f8a94c;
+  }
+  .btn-give {
+    background-color: #f44336;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Start Screen -->
+  <div class="screen" id="startScreen" style="display: block;">
+    <div class="decor" style="top:10px; left:10px;">X</div>
+    <div class="decor" style="top:20px; left:70px;">O</div>
+    <div class="decor" style="bottom:20px; left:40px;">O</div>
+    <div class="decor" style="bottom:40px; right:20px;">X</div>
+    <h1>TIC TAC TOE</h1>
+    <button class="btn play" onclick="showLoading()">PLAY</button>
+    <button class="btn exit" onclick="exitGame()">EXIT</button>
+  </div>
+
+  <!-- Loading Screen -->
+  <div class="screen" id="loadingScreen">
+    <div class="decor" style="top:10px; left:10px; font-size:50px;">X</div>
+    <div class="decor" style="top:20px; left:70px; font-size:50px;">O</div>
+    <div class="decor" style="bottom:20px; left:40px; font-size:30px;">O</div>
+    <div class="decor" style="bottom:40px; right:20px; font-size:30px;">X</div>
+    <div class="decor" style="bottom:40px; right:100px; font-size:40px;">O</div>
+    <div class="decor" style="top:30px; right:20px; font-size:30px;">X</div>
+    <div class="decor" style="top:120px; right:40px; font-size:20px;">X</div>
+    <h1>TIC TAC TOE</h1>
+    <div class="loading-text">LOADING...</div>
+  </div>
+
+  <!-- Game Board -->
+  <div class="screen" id="gameBoard">
+    <h1>TIC TAC TOE</h1>
+    <div class="board" id="board"></div>
+  </div>
+
+  <!-- Try Again Screen -->
+  <div class="try-wrap" id="tryAgainScreen">
+    <!-- 9 Heart SVGs -->
+<svg class="heart heart-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 116 134"><path fill-rule="evenodd" clip-rule="evenodd" d="M49.6298 10.0196L36.17 39.5626L61.1187 70.0539L54.8815 91.8334L76.7116 65.698L58.0001 35.2067L70.4744 13.4271L67.6708 8.53166C78.5048 -3.15104 94.336 -3.14468 105.141 10.4677C119.844 28.9906 119.578 61.329 104.574 79.3755L61.0282 131.751C60.0901 132.879 59.6211 133.444 59.1103 133.714C58.3949 134.095 57.6046 134.095 56.8898 133.714C56.379 133.444 55.91 132.879 54.9719 131.751L11.4257 79.3755C-3.57807 61.329 -3.84421 28.9906 10.8586 10.4677C22.1045 -3.70006 38.7952 -3.12891 49.6298 10.0196Z" fill="#FF5454"/></svg>
+<svg class="heart heart-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71 79"><path fill-rule="evenodd" clip-rule="evenodd" d="M43.3427 14.4316L26.7217 24.4998L28.8817 48.0115L18.4613 56.6789L38.0996 51.1238L39.0411 29.7191L52.5633 23.1585L52.8142 19.7897C62.1276 17.6699 69.998 23.0208 70.7969 33.4048C71.8839 47.5347 60.8843 63.4426 47.359 67.302L8.10391 78.5024C7.25831 78.7437 6.83536 78.8645 6.49029 78.826C6.0066 78.7726 5.61362 78.5057 5.38611 78.0759C5.22313 77.7693 5.17959 77.3316 5.09223 76.4566L1.03796 35.8368C-0.358731 21.841 10.376 5.75326 23.912 1.55652C34.2653 -1.65345 42.3733 4.26714 43.3427 14.4316Z" fill="#FF5454"/></svg>
+<svg class="heart heart-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85 103"><path fill-rule="evenodd" clip-rule="evenodd" d="M36.3666 7.70166L26.5039 30.41L44.7852 53.8474L40.2149 70.5883L56.2111 50.4992L42.5 27.0618L51.6408 10.3208L49.5864 6.55792C57.5251 -2.42207 69.1256 -2.41718 77.0432 8.04605C87.8169 22.2838 87.6218 47.1409 76.6278 61.0125L44.719 101.271C44.0316 102.138 43.6879 102.572 43.3136 102.781C42.7894 103.073 42.2103 103.073 41.6865 102.781C41.3122 102.572 40.9685 102.138 40.2811 101.271L8.3723 61.0125C-2.62186 47.1409 -2.81688 22.2838 7.95677 8.04605C16.1973 -2.84407 28.4275 -2.40506 36.3666 7.70166Z" fill="#FF5454"/></svg>
+<svg class="heart heart-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 116 134"><path fill-rule="evenodd" clip-rule="evenodd" d="M49.6298 10.0196L36.17 39.5626L61.1187 70.0539L54.8815 91.8334L76.7116 65.698L58.0001 35.2067L70.4744 13.4271L67.6708 8.53166C78.5048 -3.15104 94.336 -3.14468 105.141 10.4677C119.844 28.9906 119.578 61.329 104.574 79.3755L61.0282 131.751C60.0901 132.879 59.6211 133.444 59.1103 133.714C58.3949 134.095 57.6046 134.095 56.8898 133.714C56.379 133.444 55.91 132.879 54.9719 131.751L11.4257 79.3755C-3.57807 61.329 -3.84421 28.9906 10.8586 10.4677C22.1045 -3.70006 38.7952 -3.12891 49.6298 10.0196Z" fill="#FF5454"/></svg>
+<svg class="heart heart-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 64"><path fill-rule="evenodd" clip-rule="evenodd" d="M28.2376 4.7855L20.5795 18.8956L34.7744 33.4586L31.2257 43.8607L43.6463 31.3781L33 16.8151L40.0975 6.41293L38.5024 4.07482C44.6665 -1.50497 53.674 -1.50194 59.8218 4.99949C68.1873 13.8463 68.0357 29.2915 59.4992 37.9107L34.723 62.9258C34.1892 63.4646 33.9224 63.7342 33.6317 63.8636C33.2247 64.0455 32.775 64.0455 32.3684 63.8636C32.0777 63.7342 31.8109 63.4646 31.2771 62.9258L6.50085 37.9107C-2.0358 29.2915 -2.18722 13.8463 6.1782 4.99949C12.5767 -1.76719 22.0731 -1.4944 28.2376 4.7855Z" fill="#FF5454"/></svg>
+<svg class="heart heart-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71 79"><path fill-rule="evenodd" clip-rule="evenodd" d="M43.3427 14.4316L26.7217 24.4998L28.8817 48.0115L18.4613 56.6789L38.0996 51.1238L39.0411 29.7191L52.5633 23.1585L52.8142 19.7897C62.1276 17.6699 69.998 23.0208 70.7969 33.4048C71.8839 47.5347 60.8843 63.4426 47.359 67.302L8.10391 78.5024C7.25831 78.7437 6.83536 78.8645 6.49029 78.826C6.0066 78.7726 5.61362 78.5057 5.38611 78.0759C5.22313 77.7693 5.17959 77.3316 5.09223 76.4566L1.03796 35.8368C-0.358731 21.841 10.376 5.75326 23.912 1.55652C34.2653 -1.65345 42.3733 4.26714 43.3427 14.4316Z" fill="#FF5454"/></svg>
+<svg class="heart heart-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85 103"><path fill-rule="evenodd" clip-rule="evenodd" d="M36.3666 7.70166L26.5039 30.41L44.7852 53.8474L40.2149 70.5883L56.2111 50.4992L42.5 27.0618L51.6408 10.3208L49.5864 6.55792C57.5251 -2.42207 69.1256 -2.41718 77.0432 8.04605C87.8169 22.2838 87.6218 47.1409 76.6278 61.0125L44.719 101.271C44.0316 102.138 43.6879 102.572 43.3136 102.781C42.7894 103.073 42.2103 103.073 41.6865 102.781C41.3122 102.572 40.9685 102.138 40.2811 101.271L8.3723 61.0125C-2.62186 47.1409 -2.81688 22.2838 7.95677 8.04605C16.1973 -2.84407 28.4275 -2.40506 36.3666 7.70166Z" fill="#FF5454"/></svg>
+<svg class="heart heart-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71 79"><path fill-rule="evenodd" clip-rule="evenodd" d="M43.3427 14.4316L26.7217 24.4998L28.8817 48.0115L18.4613 56.6789L38.0996 51.1238L39.0411 29.7191L52.5633 23.1585L52.8142 19.7897C62.1276 17.6699 69.998 23.0208 70.7969 33.4048C71.8839 47.5347 60.8843 63.4426 47.359 67.302L8.10391 78.5024C7.25831 78.7437 6.83536 78.8645 6.49029 78.826C6.0066 78.7726 5.61362 78.5057 5.38611 78.0759C5.22313 77.7693 5.17959 77.3316 5.09223 76.4566L1.03796 35.8368C-0.358731 21.841 10.376 5.75326 23.912 1.55652C34.2653 -1.65345 42.3733 4.26714 43.3427 14.4316Z" fill="#FF5454"/></svg>
+<svg class="heart heart-9" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 116 134"><path fill-rule="evenodd" clip-rule="evenodd" d="M49.6298 10.0196L36.17 39.5626L61.1187 70.0539L54.8815 91.8334L76.7116 65.698L58.0001 35.2067L70.4744 13.4271L67.6708 8.53166C78.5048 -3.15104 94.336 -3.14468 105.141 10.4677C119.844 28.9906 119.578 61.329 104.574 79.3755L61.0282 131.751C60.0901 132.879 59.6211 133.444 59.1103 133.714C58.3949 134.095 57.6046 134.095 56.8898 133.714C56.379 133.444 55.91 132.879 54.9719 131.751L11.4257 79.3755C-3.57807 61.329 -3.84421 28.9906 10.8586 10.4677C22.1045 -3.70006 38.7952 -3.12891 49.6298 10.0196Z" fill="#FF5454"/></svg>
+    <div class="title">TRY AGAIN</div>
+    
+    <div class="cta">
+      <button class="btn-try" id="playBtn">PLAY AGAIN</button>
+      <button class="btn-try btn-give" id="giveBtn">GIVE UP</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+    function showLoading() {
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('loadingScreen').style.display = 'block';
+      setTimeout(showGame, 2000);
+    }
+    function showGame() {
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('gameBoard').style.display = 'flex';
+    }
+    function exitGame() {
+      if (confirm("Exit game?")) window.close();
+    }
+    
+    // Game Logic
+    const boardEl = document.getElementById('board');
+    let currentPlayer = 'X';
+    const cells = [];
+    
+    function createBoard() {
+      for (let i = 0; i < 9; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.addEventListener('click', () => makeMove(cell));
+        boardEl.appendChild(cell);
+        cells.push(cell);
+      }
+    }
+    
+    function makeMove(cell) {
+  if (!cell.textContent) {
+    cell.textContent = currentPlayer;
+    cell.classList.add('taken');
+    
+    if (checkWin(currentPlayer)) {
+      if (currentPlayer === 'X') {
+        // Player wins → reset board but keep in game screen
+        alert("You win! Starting a new game.");
+        resetGame();
+      } else {
+        // Opponent wins → show try again screen
+        setTimeout(() => {
+          document.getElementById('gameBoard').style.display = 'none';
+          tryAgainScreen.style.display = 'flex';
+        }, 100);
+      }
+    } else if (cells.every(c => c.textContent)) {
+      // Draw → show try again screen
+      setTimeout(() => {
+        document.getElementById('gameBoard').style.display = 'none';
+        tryAgainScreen.style.display = 'flex';
+      }, 100);
+    } else {
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    }
+  }
+}
+    
+    function checkWin(player) {
+      const wins = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      return wins.some(combo => combo.every(i => cells[i].textContent === player));
+    }
+    
+    createBoard();
+    
+    // Try Again Screen Logic
+    const tryAgainScreen = document.getElementById('tryAgainScreen');
+    const playBtn = document.getElementById('playBtn');
+    const giveBtn = document.getElementById('giveBtn');
+    
+    playBtn.addEventListener('click', () => {
+      tryAgainScreen.style.display = 'none';
+      document.getElementById('gameBoard').style.display = 'flex';
+      resetGame();
+    });
+    
+    giveBtn.addEventListener('click', () => {
+      tryAgainScreen.style.display = 'none';
+      document.getElementById('startScreen').style.display = 'block';
+    });
+    
+    function resetGame() {
+      cells.forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('taken');
+      });
+      currentPlayer = 'X';
+    }
+    </script>
+</script>
+</body>
+</html>
